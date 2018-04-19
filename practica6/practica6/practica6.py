@@ -42,9 +42,8 @@ class TopK:
         (Assume the alphabet is indexed from 1 to n)
         '''
         result=set([])
-        #################  TO DO #######################
+        ### ##############  TO DO #######################
         for i in range(j):
-
             if self.items[i] in itemset:
                 result.add(self.items[i])
 
@@ -61,15 +60,12 @@ class TopK:
         result=[set()]
         #################  TO DO #######################
         for t in trans_list:
-            for s in t:
-                if it == s:
+            for s in it:
+                if s in t:
 
-                    result.append(t)
-
-
+                    result.add(t)
 
         ################################################
-
         return result
 
     def closure(self,trans_list):
@@ -79,10 +75,9 @@ class TopK:
         '''
         result=set([])
         #################  TO DO #######################
-        resultAux = set(self.items)
-        for i in range(len(trans_list)):
-            resultAux = trans_list[i].intersection(result)
-            result.update(resultAux)
+        for i in range(len(trans_list)-1):
+            result.update(trans_list[i].intersection(result))
+
         ################################################
         return result
 
@@ -105,25 +100,6 @@ class TopK:
         #  next_core = the core of next_items
         #The command for adding this element to the priority queue is:
         #heapq.heappush(self.q,(self.l-next_supp,(next_items,next_trans_list,next_core)))
-
-        for j in range(Ycore,self.l_items):
-            it = self.items[j-1]
-            if not it in Yitems:
-
-                next_trans_list = self.extract_trans(it,Ytrans_list)
-
-
-                next_items = self.closure(next_trans_list)
-
-                xj = self.jth_prefix(next_items,j-1)
-                yj = self.jth_prefix(Yitems,j-1)
-                if xj == yj:
-
-                    next_supp = len(next_items)
-                    next_core = j
-                    heapq.heappush(self.q,(self.l-next_supp,(next_items,next_trans_list,next_core)))
-
-
 
         ################################################
         self.generatedK=self.generatedK+1
